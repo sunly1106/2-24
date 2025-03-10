@@ -90,6 +90,7 @@
 
             <label for="">個人照片</label>
             <input type="file" name="image" accept="image/*" onchange="preview_image(event)">
+            <div><img id="output_image" width="300"></div>
 
         </P>
 
@@ -105,7 +106,7 @@
 
     </form>  
     <script type='text/javascript'>
-function preview_image(event) {
+    function preview_image(event) {
     var reader = new FileReader();
     reader.onload = function () {
         var output = document.getElementById('output_image');
