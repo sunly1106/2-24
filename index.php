@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>報名表</h1>
- <form action=""> 
+ <form action="" method="post"> 
 
     <fieldset>
     <legend>基本資料</legend>
@@ -99,9 +99,14 @@
    
 
 
-    <input type="submit" value="送出">
+    <input type="submit" name="submit" value="送出">
+<hr>
+<?php
 
-
+if(isset($_POST["submit"])){
+        echo "收到資料";
+}
+?>
 
 
     </form>  
