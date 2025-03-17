@@ -39,11 +39,11 @@
         <label for="area">居住地</label>
         <select name="area" id="area">
             <option value="0">請選擇...</option>
-            <option value="1">北部</option>
-            <option value="2">中部</option>
-            <option value="3">南部</option>
-            <option value="4">東部</option>
-            <option value="5">離島</option>
+            <option value="北部">北部</option>
+            <option value="中部">中部</option>
+            <option value="南部">南部</option>
+            <option value="東部">東部</option>
+            <option value="離島">離島</option>
         </select>
     </p>
     </fieldset>
@@ -79,6 +79,32 @@
             <input type="radio" name="place" id="place5" value="1">
             <label for="place5">非常不滿意</label>
         </P>
+        <P>
+            <label for="">設備</label>
+            <input type="radio" name="device" id="device1" value="5">
+            <label for="device1">非常滿意</label>
+            <input type="radio" name="device" id="device2" value="4">
+            <label for="device2">滿意</label>
+            <input type="radio" name="device" id="device3" value="3">
+            <label for="device3">普通</label>
+            <input type="radio" name="device" id="device4" value="2">
+            <label for="device4">不滿意</label>
+            <input type="radio" name="device" id="device5" value="1">
+            <label for="device5">非常不滿意</label>
+        </P>
+        <P>
+            <label for="">服務</label>
+            <input type="radio" name="service" id="service1" value="5">
+            <label for="service1">非常滿意</label>
+            <input type="radio" name="service" id="service2" value="4">
+            <label for="service2">滿意</label>
+            <input type="radio" name="service" id="service3" value="3">
+            <label for="service3">普通</label>
+            <input type="radio" name="service" id="service4" value="2">
+            <label for="service4">不滿意</label>
+            <input type="radio" name="service" id="service5" value="1">
+            <label for="service5">非常不滿意</label>
+        </P>
     </fieldset>
     <fieldset>
         <legend>資料上傳</legend>
@@ -104,8 +130,35 @@
 <?php
 
 if(isset($_POST["submit"])){
+        
+
+        $name = $_REQUEST["name"];
+        $gender = $_REQUEST["gender"];
+        $bday =$_REQUEST["bday"];
+        $phone =$_REQUEST["phone"];
+        $area =$_REQUEST["area"];
+        $place =$_REQUEST["place"];
+        $device =$_REQUEST["device"];
+        $service =$_REQUEST["service"];
+
+
+
         echo "收到資料";
+        echo "<p>你的名字是:" . $name ."</p>";
+        if ($gender=="1"){
+            echo "<p>你是男生</p>";
+        } elseif ($gender=="2") {
+            echo "<p>妳是女生</p>";
+        } else {
+            echo "<p>你是男生還是女生</p>";
+        }
+        echo "<p>你的生日是:" . $bday ."</p>";
+        echo "<p>你的電話是:" . $phone ."</p>";
+        echo "<p>你的居住地是:" . $area ."</p>";
+        echo "<p>滿意度: 場地:$place ,設備:$device ,服務:$service </p>";
 }
+
+
 ?>
 
 
