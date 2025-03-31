@@ -1,189 +1,140 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>報名表</title>
-</head>
-<body>
-    <h1>報名表</h1>
- <form action="" method="post"> 
-
-    <fieldset>
-    <legend>基本資料</legend>
-    <P>
-        <label for="name">姓名 </label>
-        <input type="text" name="name" id="name" value="" placeholder="請用中文" required>
-    </P>
-    <p>
-
-        <label for="">性別</label>
-        <input type="radio" name="gender" id="gender1" value="1">
-        <label for="gender1">男生</label>
-        <input type="radio" name="gender" id="gender2" value="2">
-        <label for="gender2">女生</label>
-    </p>
-    <p>
-
-        <label for="">生日</label>
-        <input type="date" name="bday" id="bday" value="<?= date("Y-m-d") ?>">
-    </p>
-    <p>
-
-        <label for="phone">電話</label>
-        <input type="text" name="phone" id="phone">
-
-    </p>
-    <p>
-
-        <label for="area">居住地</label>
-        <select name="area" id="area">
-            <option value="0">請選擇...</option>
-            <option value="北部">北部</option>
-            <option value="中部">中部</option>
-            <option value="南部">南部</option>
-            <option value="東部">東部</option>
-            <option value="離島">離島</option>
-        </select>
-    </p>
-    </fieldset>
-    <fieldset>
-        <legend>使用行為</legend>
-        <p>
-            <input type="checkbox" name="behavior[]" id="behavior1" value="聊天">
-            <label for="behavior1">聊天</label>
-            <input type="checkbox" name="behavior[]" id="behavior2" value="直播">
-            <label for="behavior2">直播</label>
-            <input type="checkbox" name="behavior[]" id="behavior3" value="書信">
-            <label for="behavior3">書信</label>
-            <input type="checkbox" name="behavior[]" id="behavior4" value="社群">
-         <label for="behavior4">社群</label>
-            <input type="checkbox" name="behavior[]" id="behavior5" value="購物">
-            <label for="behavior5">購物</label>
-            <input type="checkbox" name="behavior[]" id="behavior6" value="金融">
-            <label for="behavior6">金融</label>
-        </p>
-    </fieldset>
-    <fieldset>
-        <legend>滿意度</legend>
-       <P>
-            <label for="">場地</label>
-            <input type="radio" name="place" id="place1" value="5">
-            <label for="place1">非常滿意</label>
-            <input type="radio" name="place" id="place2" value="4">
-            <label for="place2">滿意</label>
-            <input type="radio" name="place" id="place3" value="3">
-            <label for="place3">普通</label>
-            <input type="radio" name="place" id="place4" value="2">
-            <label for="place4">不滿意</label>
-            <input type="radio" name="place" id="place5" value="1">
-            <label for="place5">非常不滿意</label>
-        </P>
-        <P>
-            <label for="">設備</label>
-            <input type="radio" name="device" id="device1" value="5">
-            <label for="device1">非常滿意</label>
-            <input type="radio" name="device" id="device2" value="4">
-            <label for="device2">滿意</label>
-            <input type="radio" name="device" id="device3" value="3">
-            <label for="device3">普通</label>
-            <input type="radio" name="device" id="device4" value="2">
-            <label for="device4">不滿意</label>
-            <input type="radio" name="device" id="device5" value="1">
-            <label for="device5">非常不滿意</label>
-        </P>
-        <P>
-            <label for="">服務</label>
-            <input type="radio" name="service" id="service1" value="5">
-            <label for="service1">非常滿意</label>
-            <input type="radio" name="service" id="service2" value="4">
-            <label for="service2">滿意</label>
-            <input type="radio" name="service" id="service3" value="3">
-            <label for="service3">普通</label>
-            <input type="radio" name="service" id="service4" value="2">
-            <label for="service4">不滿意</label>
-            <input type="radio" name="service" id="service5" value="1">
-            <label for="service5">非常不滿意</label>
-        </P>
-    </fieldset>
-    <fieldset>
-        <legend>資料上傳</legend>
-        <P>
-            <label for="">同意書</label>
-            <input type="file" name="agreement" id="agreement" accept=".doc,.doex">
-        </P>
-        <P>
-
-            <label for="">個人照片</label>
-            <input type="file" name="image" accept="image/*" onchange="preview_image(event)">
-            <div><img id="output_image" width="300"></div>
-
-        </P>
-
-
-    </fieldset>
-   
-
-
-    <input type="submit" name="submit" value="送出">
-<hr>
 <?php
+// 設定資料庫連線資訊
+$servername = "localhost";
+$username = "root"; // 你的 MySQL 使用者名稱
+$password = ""; // 你的 MySQL 密碼
+$dbname = "school"; // 請替換為你的資料庫名稱
 
-if(isset($_POST["submit"])){
-        
+// 建立連線
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-        $name = $_REQUEST["name"];
-        
-        if (isset($_REQUEST["gender"])){
-            if ($_REQUEST["gender"]=="1"):
-                $gender = "這是男生";
-            elseif($_REQUEST["gender"]=="2"):
-                $gender = "這是女生";
-            endif;        
-        } else{
-            $gender = "性別沒寫";
-        }
-
-        $bday =$_REQUEST["bday"];
-        $phone =$_REQUEST["phone"];
-        $area =$_REQUEST["area"];
-        $place =$_REQUEST["place"];
-        $device =$_REQUEST["device"];
-        $service =$_REQUEST["service"];
-
-        if (isset($_REQUEST["behavior"])){
-            $behavior = implode(",", $_REQUEST["behavior"]);
-        } else {
-            $behavior ="沒有選任何項目";
-        }
-
-
-
-        echo "收到資料";
-        echo "<p>你的名字是:" . $name ."</p>";
-        echo "<p>你的性別是:" . $gender ."</p>";
-        echo "<p>你的生日是:" . $bday ."</p>";
-        echo "<p>你的電話是:" . $phone ."</p>";
-        echo "<p>你的居住地是:" . $area ."</p>";
-        echo "<p>使用行為:" . $behavior ."</p>";
-        echo "<p>滿意度: 場地:$place ,設備:$device ,服務:$service </p>";
-        
+// 檢查連線是否成功
+if ($conn->connect_error) {
+    die("連線失敗: " . $conn->connect_error);
 }
 
+// 設定每頁顯示的記錄數
+$records_per_page = 10;
+
+// 取得當前頁數（如果沒有設定，預設為第 1 頁）
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$page = max($page, 1); // 確保頁數不小於 1
+
+// 計算 SQL LIMIT 起始點
+$offset = ($page - 1) * $records_per_page;
+
+// 查詢總記錄數
+$total_sql = "SELECT COUNT(*) AS total FROM book";
+$total_result = $conn->query($total_sql);
+$total_row = $total_result->fetch_assoc();
+$total_records = $total_row['total'];
+
+// 計算總頁數
+$total_pages = ceil($total_records / $records_per_page);
+
+// 查詢當前頁數的記錄
+$sql = "SELECT id, bookname, author, publisher, pubdate, price, content FROM book LIMIT $offset, $records_per_page";
+$result = $conn->query($sql);
 
 ?>
 
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>書籍列表（分頁）</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .pagination {
+            margin-top: 20px;
+        }
+        .pagination a {
+            margin: 0 5px;
+            padding: 5px 10px;
+            border: 1px solid #007BFF;
+            color: #007BFF;
+            text-decoration: none;
+        }
+        .pagination a:hover {
+            background-color: #007BFF;
+            color: white;
+        }
+        .pagination .disabled {
+            color: grey;
+            border-color: grey;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
 
-    </form>  
-    <script type='text/javascript'>
-    function preview_image(event) {
-    var reader = new FileReader();
-    reader.onload = function () {
-        var output = document.getElementById('output_image');
-        output.src = reader.result;
+<h2>書籍列表</h2>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>書名</th>
+        <th>作者</th>
+        <th>出版社</th>
+        <th>出版日期</th>
+        <th>定價</th>
+        <th>內容說明</th>
+    </tr>
+
+    <?php
+    if ($result->num_rows > 0) {
+        // 輸出資料
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>
+                    <td>{$row['id']}</td>
+                    <td>{$row['bookname']}</td>
+                    <td>{$row['author']}</td>
+                    <td>{$row['publisher']}</td>
+                    <td>{$row['pubdate']}</td>
+                    <td>{$row['price']}</td>
+                    <td>{$row['content']}</td>
+                  </tr>";
+        }
+    } else {
+        echo "<tr><td colspan='7'>沒有找到書籍資料</td></tr>";
     }
-    reader.readAsDataURL(event.target.files[0]);
-}
-</script>
+    ?>
+
+</table>
+
+<!-- 分頁導航 -->
+<div class="pagination">
+    <?php if ($page > 1): ?>
+        <a href="?page=<?= $page - 1 ?>">上一頁</a>
+    <?php else: ?>
+        <span class="disabled">上一頁</span>
+    <?php endif; ?>
+
+    <span>第 <?= $page ?> 頁 / 共 <?= $total_pages ?> 頁</span>
+
+    <?php if ($page < $total_pages): ?>
+        <a href="?page=<?= $page + 1 ?>">下一頁</a>
+    <?php else: ?>
+        <span class="disabled">下一頁</span>
+    <?php endif; ?>
+</div>
+
 </body>
 </html>
+
+<?php
+// 關閉連線
+$conn->close();
+?>
