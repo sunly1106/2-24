@@ -83,7 +83,6 @@
     <!-- 在這裡插入你想呈現的內容 -->
 </body>
 </html>
-
 <?php
 $servername = "localhost";
 $username = "root";
@@ -93,9 +92,17 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) die("連線失敗: " . $conn->connect_error);
 $conn->set_charset("utf8mb4");
 
+if (isset($_GET['id'])) {
+    $id = (int)$_GET['id'];
+    $book = $conn->query("SELECT * FROM book WHERE id = $id")->fetch_assoc();
+    if (!$book) die("書籍不存在");
+} else {
+    die("未指定書籍 ID");
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $stmt = $conn->prepare("INSERT INTO book (bookname, author, publisher, pubdate, price) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssss", $_POST['bookname'], $_POST['author'], $_POST['publisher'], $_POST['pubdate'], $_POST['price']);
+    $stmt = $conn->prepare("UPDATE book SET bookname=?, author=?, publisher=?, pubdate=?, price=? WHERE id=?");
+    $stmt->bind_param("sssssi", $_POST['bookname'], $_POST['author'], $_POST['publisher'], $_POST['pubdate'], $_POST['price'], $id);
     $stmt->execute();
     $stmt->close();
     header("Location: book_list.php");
@@ -104,16 +111,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 <!DOCTYPE html>
 <html lang="zh-TW">
-<head><meta charset="UTF-8"><title>新增書籍</title></head>
+<head><meta charset="UTF-8"><title>編輯書籍</title></head>
 <body>
-<h2>新增書籍</h2>
+<h2>編輯書籍</h2>
 <form method="POST">
-    書名：<input type="text" name="bookname" required><br>
-    作者：<input type="text" name="author" required><br>
-    出版社：<input type="text" name="publisher" required><br>
-    出版日期：<input type="date" name="pubdate" required><br>
-    定價：<input type="text" name="price" required><br>
-    <button type="submit">新增</button>
+    書名：<input type="text" name="bookname" required value="<?= $book['bookname'] ?>"><br>
+    作者：<input type="text" name="author" required value="<?= $book['author'] ?>"><br>
+    出版社：<input type="text" name="publisher" required value="<?= $book['publisher'] ?>"><br>
+    出版日期：<input type="date" name="pubdate" required value="<?= $book['pubdate'] ?>"><br>
+    定價：<input type="text" name="price" required value="<?= $book['price'] ?>"><br>
+    <button type="submit">更新</button>
 </form>
 <a href="book_list.php">返回列表</a>
 </body>
