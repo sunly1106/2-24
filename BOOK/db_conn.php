@@ -10,10 +10,10 @@
 <?php
 
 // 設定主機、資料庫名稱、權限帳密
-$hostname = 'localhost';
-$database = 'school';
-$dbuser = 'root';
-$dbpass = '';
+$hostname = 'sql112.infinityfree.com';
+$database = 'if0_39081082_sunly';
+$dbuser = 'if0_39081082';
+$dbpass = 'Kkus4HAiK3Y';
 
 try {
     $conn = new PDO("mysql:host=$hostname;dbname=$database;charset=UTF8", $dbuser, $dbpass);
